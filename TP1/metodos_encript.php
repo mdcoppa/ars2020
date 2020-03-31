@@ -28,6 +28,12 @@ for ($pos=0; $pos <= $tamano ; $pos++) {
     echo " ","<span style='color:red; font:bold 25px Arial;'>C</apan>";
     }else{
       */
+    $i = (ord($resultado1)+3) % 27;
+    $j = ord($resultado1);
+    
+    $resultado = chr($i);
+    echo " ", "<span style='color:red; font:bold 25px Arial;'>$resultado1 : $j: $i</apan>";
+    /*
      for ($i=65;$i<=90;$i++) {
       $letra = chr($i);
       if ($resultado1 == $letra) {
@@ -36,8 +42,9 @@ for ($pos=0; $pos <= $tamano ; $pos++) {
        echo " ", "<span style='color:red; font:bold 25px Arial;'>$resultado</apan>";
       }               
      }
+     */
     //}
-   }
+   //}
   //}
 }
 echo "</br>","</br>","</br>";
