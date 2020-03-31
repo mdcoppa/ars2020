@@ -38,7 +38,7 @@ for ($pos=0; $pos <= $tamano ; $pos++) {
      }
     //}
    }
-  }
+  //}
 }
 echo "</br>","</br>","</br>";
 echo "<a href='caesar.php'>Atras<a/>"; 
