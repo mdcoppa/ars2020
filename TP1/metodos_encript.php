@@ -1,6 +1,9 @@
 <?php
+$alfabeto = array("A", "B", "C", "D", "E", "F", "G ", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+
 $mensaje = $_POST['mensaje'];
-$mensaje = strtoupper($mensaje);
+//Paso a mayusculas el mensaje para que coincida con el alfabeto.
+$mensaje = strtoupper($mensaje); 
 $tamano =  strlen($mensaje);
 $desplazamiento = $_POST['desplazamiento'];
 
@@ -14,38 +17,22 @@ echo "</br>";
 echo "<div class='a'>$desplazamiento</div>";
 echo "</br>";
 echo "</br>";
-echo "MENSAJE ENCRIPTADO:", "
-";
+echo "MENSAJE ENCRIPTADO:";
+
 for ($pos=0; $pos <= $tamano ; $pos++) {
- $resultado1 = $mensaje[$pos];
-  /*if ($resultado1 == X) {
-   echo " ","<span style='color:red; font:bold 25px Arial;'>AAA</apan>";
-  }else{
-   if ($resultado1 == Y) {
-   echo " ","<span style='color:red; font:bold 25px Arial;'>B</apan>";
-   }else{
-    if ($resultado1 == Z) {
-    echo " ","<span style='color:red; font:bold 25px Arial;'>C</apan>";
+  //Los espacios en blanco no se modifican
+  //Se asume que el mensaje solo contiene caracteres del alfabeto, se verifica la mensaje antes
+  for ($i=0;$i<27;$i++) {
+    if ($mensaje[$pos] == ' '){
+      $resultado = " ";
     }else{
-      */
-    $i = (ord($resultado1)+3) % 27;
-    $j = ord($resultado1);
-    
-    $resultado = chr($i);
-    echo " ", "<span style='color:red; font:bold 25px Arial;'>$resultado1 : $j: $i</apan>";
-    /*
-     for ($i=65;$i<=90;$i++) {
-      $letra = chr($i);
-      if ($resultado1 == $letra) {
-       $i = $i + 3;
-       $resultado =chr($i);
-       echo " ", "<span style='color:red; font:bold 25px Arial;'>$resultado</apan>";
-      }               
-     }
-     */
-    //}
-   //}
-  //}
+      if ($mensaje[$pos] == $alfabeto[i]) {
+        $resultado =$alfabeto[(i+3)%27];
+      }
+    }
+     echo " ", "<span style='color:red; font:bold 25px Arial;'>$resultado</apan>";
+    }
+
 }
 echo "</br>","</br>","</br>";
 echo "<a href='caesar.php'>Atras<a/>"; 
