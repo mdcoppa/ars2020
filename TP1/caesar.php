@@ -6,8 +6,8 @@
         //Alfabeto a utilizar por la clase (solo se cifran los caracteres del alfabeto)
         private $alfabeto = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 
-        //Funcion para cifrar el mensaje segun el desplazamiento dado
-        public function encriptar($mensaje, $desplazamiento){
+        //Funcion para cifrar el mensaje segun la clave (o desplazamiento) dada
+        public function encriptar($mensaje, $key){
             $tamano =  strlen($mensaje);
             $resultado = '';
 
@@ -20,7 +20,7 @@
                     $resultado .= ' ';
                   }else{
                     if (ord($mensaje[$pos]) == ord($this->alfabeto[$i])) {
-                      $resultado .= $this->alfabeto[($i+$desplazamiento)%27];
+                      $resultado .= $this->alfabeto[($i+$key)%27];
                     }
                   }
                 }
@@ -30,8 +30,8 @@
           }
 
 
-        //Funcion para descifrar el mensaje segun el desplazamiento dado
-        public function desencriptar($mensaje, $desplazamiento){
+        //Funcion para descifrar el mensaje segun la clave (o desplazamiento) dada
+        public function desencriptar($mensaje, $key){
           $tamano =  strlen($mensaje);
           $resultado = '';
 
@@ -43,7 +43,7 @@
                   $resultado .= ' ';
                 }else{
                  if (ord($mensaje[$pos]) == ord($this->alfabeto[$i])) {
-                  $resultado .= $this->alfabeto[mod($i-$desplazamiento,27)];
+                  $resultado .= $this->alfabeto[mod($i-$key,27)];
                   }
                 }
               }
@@ -65,53 +65,40 @@
               //Recorro cada palabra del diccionario y me fijo cuantas veces aparece en la palabra desencriptada
               while (!feof($fp)){
                 $palabra_dicc = strtoupper(trim(fgets($fp)));
-                $nro_ocurrencias = substr_count($msg_aux, $palabra_dicc);
-                echo "** Mensaje aux: " . $msg_aux;
-                echo "** Palabra dicc: " . $palabra_dicc;
-                //echo "** Len pal dicc: " . strlen(trim($palabra_dicc));
-                echo "<br>";
-
-                if ($nro_ocurrencias > $nro_ocurrencia_max){
-                  $nro_ocurrencia_max = $nro_ocurrencias;
+                if (!empty($palabra_dicc)){
+                    $nro_ocurrencias = substr_count($msg_aux, $palabra_dicc);
+                  /* Pruebas de control
+                  echo "** Mensaje aux: " . $msg_aux;
+                  echo "** Palabra dicc: " . $palabra_dicc;
+                  echo "** Len pal dicc: " . strlen(trim($palabra_dicc));
+                  echo "<br>";
+                  */
+                  if ($nro_ocurrencias > $nro_ocurrencia_max){
+                    $nro_ocurrencia_max = $nro_ocurrencias;
+                  }
                 }
               }
               fclose($fp);
+              /* Pruebas de control
               echo "Nro de ocurrencias maximas: " . $nro_ocurrencia_max;
               echo "<br>";
               echo "<br>";
+              */
               //Asigno el maximo nro de ocurrencias para la $key
               $plaintexts[$key] = $nro_ocurrencia_max;
             }
-    
-           
-           
-            /*
-            
-            foreach (range(0, 26) as $key){
-              echo "<br>";
-              echo "Key: " . $plaintexts[$key];
-              echo "<br>";
-              echo "Text: " . strtoupper($this->desencriptar($mensaje, $key));
-              echo "<br>";
-            }
-
-            */
-
 
             //Encuentro la clave que tiene mas apariciones
-            //array_keys ( array $input [, mixed $search_value = NULL [, bool $strict = false ]] )
+            // Si mas de una clave tiene la misma cantidad de apariciones maxima, queda guardada en $sugerencias
             $sugerencias = array_keys($plaintexts,max($plaintexts));
 
+            // Imprimo todas las sugerencias encontradas
             foreach ($sugerencias as $valor_sug) {
-              
-              //$found_key = array_search(max($plaintexts), $plaintexts);
               $found_msg =  $this->desencriptar($mensaje, $valor_sug);
   
               echo "Clave Sugerida: " . $valor_sug;
               echo " * Mensaje Sugerido: " . $found_msg;
               echo "<br>";
-
-
             }
 
         }

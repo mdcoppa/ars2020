@@ -34,19 +34,22 @@
         $opcion = $_REQUEST['opciones'];
         $result='';
         
-        echo "Mensaje Original: " . $men;
+        echo "<br>";
+        echo "<br>";
+        echo "** Mensaje: " . $men;
         echo "<br>";
 
         switch($opcion){
             case 0: 
-                echo "Mensaje Cifrado: " . $cifrado->encriptar($men, $clave);
+                echo "** Mensaje Cifrado: " . $cifrado->encriptar($men, $clave);
                 break;
             case 1:
-                echo "Mensaje Descifrado: " . $cifrado->desencriptar($men, $clave);
+                echo "** Mensaje Descifrado: " . $cifrado->desencriptar($men, $clave);
                 break;
             case 2:
-                $cifrado->crackfb($men);
-                break ;
+                echo "** Sugerencias: <br>";
+                echo $cifrado->crackfb($men);
+                break;
 
         }
         
