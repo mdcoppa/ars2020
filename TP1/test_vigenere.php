@@ -2,6 +2,8 @@
    <head>
    </head>
    <body>
+        <h1> CRIPTOGRAFICA SIMETRICA </h1>
+        <h2> Cifrador/Descifrador Vigenere </h2>
        <form action="test_vigenere.php" method="POST">
             Acción: <select name="opciones">
                 <option value=0>Cifrar</option>

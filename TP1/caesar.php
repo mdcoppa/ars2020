@@ -51,25 +51,69 @@
           return $resultado;
         }
 
-        public function crack($mensaje){
+        public function crackfb($mensaje){
             $plaintexts = [];
-            $crack = "";
+            $sugerencias = [];    //Arreglo donde guardo las keys con mayores ocurrencias.
 
+
+            //For para probar con todas las claves (o desplazamientos posibles)
             foreach (range(0, 26) as $key) {
-                $plaintexts[$key] = substr_count(strtoupper($this->desencriptar($mensaje, $key)), 'A');
-                //echo $plaintexts[$key];
+              $msg_aux = strtoupper($this->desencriptar($mensaje, $key));
+              $nro_ocurrencia_max=0;
+              
+              $fp = fopen("diccionario.txt", "r");
+              //Recorro cada palabra del diccionario y me fijo cuantas veces aparece en la palabra desencriptada
+              while (!feof($fp)){
+                $palabra_dicc = strtoupper(trim(fgets($fp)));
+                $nro_ocurrencias = substr_count($msg_aux, $palabra_dicc);
+                echo "** Mensaje aux: " . $msg_aux;
+                echo "** Palabra dicc: " . $palabra_dicc;
+                //echo "** Len pal dicc: " . strlen(trim($palabra_dicc));
                 echo "<br>";
+
+                if ($nro_ocurrencias > $nro_ocurrencia_max){
+                  $nro_ocurrencia_max = $nro_ocurrencias;
+                }
+              }
+              fclose($fp);
+              echo "Nro de ocurrencias maximas: " . $nro_ocurrencia_max;
+              echo "<br>";
+              echo "<br>";
+              //Asigno el maximo nro de ocurrencias para la $key
+              $plaintexts[$key] = $nro_ocurrencia_max;
             }
     
-            //Encuentro la clave donde 'A' tiene mas apariciones
-            $found_key = array_search(max($plaintexts), $plaintexts);
-            $found_msg = $this->desencriptar($mensaje, $found_key);
-
-            //Guardo el resultado en el archivo
-            $file = fopen("crack.txt", "w");
+           
+           
+            /*
             
-            fwrite($file, "****Sugerencia de clave: ". $found_msg);
-            fclose($file);
+            foreach (range(0, 26) as $key){
+              echo "<br>";
+              echo "Key: " . $plaintexts[$key];
+              echo "<br>";
+              echo "Text: " . strtoupper($this->desencriptar($mensaje, $key));
+              echo "<br>";
+            }
+
+            */
+
+
+            //Encuentro la clave que tiene mas apariciones
+            //array_keys ( array $input [, mixed $search_value = NULL [, bool $strict = false ]] )
+            $sugerencias = array_keys($plaintexts,max($plaintexts));
+
+            foreach ($sugerencias as $valor_sug) {
+              
+              //$found_key = array_search(max($plaintexts), $plaintexts);
+              $found_msg =  $this->desencriptar($mensaje, $valor_sug);
+  
+              echo "Clave Sugerida: " . $valor_sug;
+              echo " * Mensaje Sugerido: " . $found_msg;
+              echo "<br>";
+
+
+            }
+
         }
 
 

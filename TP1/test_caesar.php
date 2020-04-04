@@ -2,6 +2,8 @@
    <head>
    </head>
    <body>
+       <h1> CRIPTOGRAFICA SIMETRICA </h1>
+       <h2> Cifrador/Descifrador Caesar </h2>
        <form action="test_caesar.php" method="POST">
             Acción: <select name="opciones">
                 <option value=0>Cifrar</option>
@@ -43,8 +45,7 @@
                 echo "Mensaje Descifrado: " . $cifrado->desencriptar($men, $clave);
                 break;
             case 2:
-                echo "Archivo de diccionario generado:";
-                $cifrado->crack($men);
+                $cifrado->crackfb($men);
                 break ;
 
         }
