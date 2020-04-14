@@ -6,6 +6,26 @@
         //Alfabeto a utilizar por la clase (solo se cifran los caracteres del alfabeto)
         private $alfabeto = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 
+        //Funcion para validar el mensaje de entrada
+        public function validar_mensaje($mensaje){
+          if (empty($mensaje)){
+            echo "Debe escribir un mensaje. <br>";
+            return false;
+          }
+          
+          return true;
+        }
+
+        //Funcion para validar la clave que se utiliza para cifrar
+        public function validar_clave($clave){
+          if (empty($clave)){
+            echo "Debe escribir una clave. <br>";
+            return false;
+          }
+          return true;
+        }
+
+        
         //Funcion para cifrar el mensaje segun la clave (o desplazamiento) dada
         public function encriptar($mensaje, $key){
             $tamano =  strlen($mensaje);
@@ -56,48 +76,46 @@
             $sugerencias = [];    //Arreglo donde guardo las keys con mayores ocurrencias.
 
 
+            $palabras_mensaje = explode(" ", $mensaje);
+
+
             //For para probar con todas las claves (o desplazamientos posibles)
             foreach (range(0, 26) as $key) {
-              $msg_aux = strtoupper($this->desencriptar($mensaje, $key));
-              $nro_ocurrencia_max=0;
-              
-              $fp = fopen("diccionario.txt", "r");
-              //Recorro cada palabra del diccionario y me fijo cuantas veces aparece en la palabra desencriptada
-              while (!feof($fp)){
-                $palabra_dicc = strtoupper(trim(fgets($fp)));
-                if (!empty($palabra_dicc)){
-                    $nro_ocurrencias = substr_count($msg_aux, $palabra_dicc);
-                  /* Pruebas de control
-                  echo "** Mensaje aux: " . $msg_aux;
-                  echo "** Palabra dicc: " . $palabra_dicc;
-                  echo "** Len pal dicc: " . strlen(trim($palabra_dicc));
-                  echo "<br>";
-                  */
-                  if ($nro_ocurrencias > $nro_ocurrencia_max){
-                    $nro_ocurrencia_max = $nro_ocurrencias;
+              $nro_ocurrencias=0;
+              foreach($palabras_mensaje as $pal_mensaje){
+                $msg_aux = $this->desencriptar($pal_mensaje, $key);
+                
+                $fp = fopen("diccionario.txt", "r");
+                //Recorro cada palabra del diccionario y me fijo cuantas veces aparece en la palabra desencriptada
+                while (!feof($fp)){
+                  $palabra_dicc = trim(fgets($fp));
+                  if (!empty($palabra_dicc)){                 //por si hay lineas en blanco en el diccionario
+                    if (strcasecmp($msg_aux, $palabra_dicc) == 0){
+                      $nro_ocurrencias++;
+                    }
                   }
                 }
+                fclose($fp);
+
+                //Asigno el maximo nro de ocurrencias para la $key
+                $plaintexts[$key] = $nro_ocurrencias;
               }
-              fclose($fp);
-              /* Pruebas de control
-              echo "Nro de ocurrencias maximas: " . $nro_ocurrencia_max;
-              echo "<br>";
-              echo "<br>";
-              */
-              //Asigno el maximo nro de ocurrencias para la $key
-              $plaintexts[$key] = $nro_ocurrencia_max;
             }
 
+              
             //Encuentro la clave que tiene mas apariciones
             // Si mas de una clave tiene la misma cantidad de apariciones maxima, queda guardada en $sugerencias
             $sugerencias = array_keys($plaintexts,max($plaintexts));
 
             // Imprimo todas las sugerencias encontradas
+            echo "<br><br>Sugerencias: <br>";
+
             foreach ($sugerencias as $valor_sug) {
               $found_msg =  $this->desencriptar($mensaje, $valor_sug);
   
               echo "Clave Sugerida: " . $valor_sug;
-              echo " * Mensaje Sugerido: " . $found_msg;
+              echo " ***Palabras encontradas en el diccionario: " . $plaintexts[$valor_sug];
+              echo " ***Mensaje Sugerido: " . $found_msg;
               echo "<br>";
             }
 

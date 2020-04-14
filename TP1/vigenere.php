@@ -7,6 +7,25 @@
         //Alfabeto a utilizar por la clase (solo se cifran los caracteres del alfabeto)
         private $alfabeto = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "Ñ", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
 
+
+        //Funcion para validar el mensaje de entrada
+        public function validar_mensaje($mensaje){
+          if (empty($mensaje)){
+            echo "Debe escribir un mensaje. <br>";
+            return false;
+          }
+          
+          return true;
+        }
+
+        //Funcion para validar la clave que se utiliza para cifrar
+        public function validar_clave($clave){
+          if (empty($clave)){
+            echo "Debe escribir una clave. <br>";
+            return false;
+          }
+          return true;
+        }
         
         //Funcion para cifrar el mensaje segun la clave dada
         public function encriptar($mensaje, $clave){
@@ -26,6 +45,7 @@
                 }
 
                 //Busco la posicion para cada uno de los caracteres de la clave
+                //La posicion encontrada es la que uso para cifrar
                 for ($i=0; $i < 27; $i++) {
                   if (ord($clave[$pos_clave]) == ord($this->alfabeto[$i])) {
                     $orden_clave = $i;
@@ -33,8 +53,9 @@
                   }
                 }
 
+                //Busco la posicion de cada caracter del mensaje y lo cifro con la posicion de la clave correspondiente
                 for ($i=0; $i < 27; $i++) {
-                  if (strcmp($mensaje[$pos_txt], ' ') == 0){
+                  if (strcmp($mensaje[$pos_txt], ' ') == 0){                      //los espacios quedan igual
                     $resultado .= ' ';
                   }else{
                     if (ord($mensaje[$pos_txt]) == ord($this->alfabeto[$i])) {
@@ -89,5 +110,7 @@
           }
           return $resultado;
         }
+
+
       }
 ?>
