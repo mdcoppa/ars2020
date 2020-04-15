@@ -8,7 +8,7 @@
 
         //Funcion para validar el mensaje de entrada
         public function validar_mensaje($mensaje){
-          if (empty($mensaje)){
+          if (empty(trim($mensaje))){
             echo "Debe escribir un mensaje. <br>";
             return false;
           }
@@ -18,7 +18,7 @@
 
         //Funcion para validar la clave que se utiliza para cifrar
         public function validar_clave($clave){
-          if (empty($clave)){
+          if (empty(trim($clave))){
             echo "Debe escribir una clave. <br>";
             return false;
           }
