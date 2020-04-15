@@ -4,22 +4,24 @@
 
 ## Criptografía Simétrica
 ### Cifrador/Descifrador Caesar
-Se implementa el algoritmo Caesar mediante 2 archivos
+Se implementa el programa mediante 3 archivos
 - caesar.php: Contiene las funciones para cifrar/descifrar, alfabeto a utilizar y validaciones para el mensaje y clave de entrada.
-$alfabeto[]: Arreglo con el alfabeto permitido.
-$validar_mensaje() / $validar_clave(): Validación del mensaje y la clave del usuario. 
-encriptar($mensaje, $key): Encripta el mensaje desplazandolo $key posiciones. 
-desencriptar($mensaje, $key): Desencripta el mensaje segun $key posiciones. 
-crackfb($mensaje): Función de fuerza bruta para desecriptar el mensaje. 
-La función desencripta el mensaje usando todas las claves posibles y busca las palabras del mensaje desencriptado en diccionario.txt. La clave que tenga más palabras encontradas las devolverá como resultado de la función junto con el mensaje descrifado para esa clave. 
+  - $alfabeto[]: Arreglo con el alfabeto permitido.
+  - $validar_mensaje() / $validar_clave(): Validación del mensaje y la clave del usuario. 
+  - encriptar($mensaje, $key): Encripta el mensaje desplazandolo $key posiciones. 
+  - desencriptar($mensaje, $key): Desencripta el mensaje segun $key posiciones. 
+  - crackfb($mensaje): Función de fuerza bruta para desecriptar el mensaje. 
+    La función desencripta el mensaje usando todas las claves posibles y busca las palabras del mensaje desencriptado en diccionario.txt. La clave que tenga más palabras encontradas las devolverá como resultado de la función junto con el mensaje descrifado para esa clave. 
 La función puede devolver más de 1 clave y mensaje descifrado.
-Consideraciones: los espacios en blanco no se encriptan/desencriptan.
+
+   Consideraciones: los espacios en blanco no se encriptan/desencriptan.
 
 
 - test_caesar.php: Interfaz de usuario.
-El formulario valida mediante HTML:
-Clave: Verifico que el campo no este vacío y que sea número entero.
-Mensaje: Verifico que el campo no este vacío y que escriba como máximo 254 caracteres.
+
+   El formulario valida mediante HTML:
+   - Clave: Verifico que el campo no este vacío y que sea número entero.
+   - Mensaje: Verifico que el campo no este vacío y que escriba como máximo 254 caracteres.
 
 - diccionario.txt: Diccionario utilizado por la función de fuerza bruta
 
