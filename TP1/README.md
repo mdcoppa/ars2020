@@ -56,14 +56,20 @@ Los hash o funciones de resumen son algoritmos que consiguen crear a partir de u
  ### Programa de Registro/Autenticación utilizand Hash - Salt
  Se implementa el programa mediante 3 archivos:
  - acceso_bd.php: Tiene las variables que se usan para establecer la conexión a la base de datos.
- - user_access.php: Se utiliza para la autenticación del usuario.
-    
-    El formulario valida mediante HTML:
-   - Usuario: Se verifica que el campo no este vacío.
-   - Password: Se verifica que el campo no este vacío.
-- user_reg.php: Da de alta al usuario en la base de datos.
+ - user_reg.php: Da de alta al usuario en la base de datos.
 
     El formulario valida mediante HTML:
    - Usuario: Se verifica que el campo no este vacío.
    - Nombre y Apellido: Se verifica que el campo no este vacío. 
    - Password: Se verifica que el campo no este vacío.
+   
+   Para almacenar el hash se utiliza la función password_hash(password_plano, PASSWORD_DEFAULT) que devuelve el hash de la contraseña. El algoritmo, coste y salt usados son devueltos como parte del hash. Por lo tanto, toda la información que es necesaria para verificar el hash, está incluida en él. Constante PASSWORD_DEFAULT: Usa el algoritmo bcrypt (predeterminado a partir de PHP 5.5.0). 
+- user_access.php: Se utiliza para la autenticación del usuario.
+    
+    El formulario valida mediante HTML:
+   - Usuario: Se verifica que el campo no este vacío.
+   - Password: Se verifica que el campo no este vacío.
+   
+   Para la verificacion de password se utiliza la función password_verify(password_plano, hash) Hay que observar que password_hash() devuelve el algoritmo, el coste y el salt como parte del hash devuelto. Por lo tanto, toda la información que es necesaria para verificar el hash está incluida. Esto permite a la función de verificación comprobar el hash sin la necesidad de almacenar por separado la información del salt o del algoritmo.
+
+Se incluye también el archivo usersmc.sql para la creación de la tabla de usuarios correspondientes.
