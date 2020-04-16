@@ -63,7 +63,7 @@ Los hash o funciones de resumen son algoritmos que consiguen crear a partir de u
    - Nombre y Apellido: Se verifica que el campo no este vacío. 
    - Password: Se verifica que el campo no este vacío.
    
-   Para almacenar el hash se utiliza la función password_hash(password_plano, PASSWORD_DEFAULT) que devuelve el hash de la contraseña. El algoritmo, coste y salt usados son devueltos como parte del hash. Por lo tanto, toda la información que es necesaria para verificar el hash, está incluida en él. Constante PASSWORD_DEFAULT: Usa el algoritmo bcrypt (predeterminado a partir de PHP 5.5.0). 
+   Para almacenar el hash se utiliza la función password_hash(password_plano, PASSWORD_DEFAULT) que devuelve el hash de la contraseña. Constante PASSWORD_DEFAULT: Usa el algoritmo bcrypt (predeterminado a partir de PHP 5.5.0). Al omitir el parametro, se genera una salt aleatoria para cada hash. El algoritmo, coste y salt usados son devueltos como parte del hash. Por lo tanto, toda la información que es necesaria para verificar el hash, está incluida en él.  
 - user_access.php: Se utiliza para la autenticación del usuario.
     
     El formulario valida mediante HTML:
