@@ -61,13 +61,12 @@
                   }
                 }
                 
-                //Paso al siguiente caracter de la clave
-                $pos_clave++;
                 //Si la Ñ es parte de la clave tengo que avanzar un caracter mas 
                 if (ord($clave[$pos_clave]) == ord("Ñ")){
                   $pos_clave++;
                 }
-                
+                //Paso al siguiente caracter de la clave
+                $pos_clave++;
             }
             
             return $resultado;
