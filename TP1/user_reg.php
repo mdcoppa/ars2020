@@ -7,13 +7,13 @@
        <form action="user_reg.php" method="POST">
             <br>
             <br>
-            Usuario: <input type="text" name="name" style=" width:385px;" placeholder="Nombre de usuario" required/>
+            Usuario: <input type="text" name="name" style=" width:385px;" placeholder="Nombre de usuario" maxlength= "20" required/>
             <br>
             <br>
-            Nombre y Apellido: <input type="text" name="apynom" style=" width:385px;" required/>
+            Nombre y Apellido: <input type="text" name="apynom" style=" width:385px;" pattern="{1,100}" required/>
             <br>
             <br>
-            Password: <input type="password" name="pass" style="width:385px;" required/>
+            Password: <input type="password" name="pass" style="width:385px;" pattern="{1,254}" required/>
             <br>
             <br>
           <button type="submit" name="registrar" value="Registrar">Registrar</button>
