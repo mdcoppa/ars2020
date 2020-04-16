@@ -53,4 +53,17 @@ Los hash o funciones de resumen son algoritmos que consiguen crear a partir de u
 
 3.	Salt es un concepto que generalmente está asociado al hashing de contraseñas. Es un valor que se agrega a  la contraseña para crear un valor hash diferente. Esto agrega una capa de seguridad al proceso de hash, específicamente contra ataques de fuerza bruta que utilizan Rainbow Tables, estas son tablas de búsqueda inversa para hashes. El creador de las tablas precalcula los hashes para palabras comunes, frases, palabras modificadas y strings aleatorios.
 
- 
+ ### Programa de Registro/Autenticación utilizand Hash - Salt
+ Se implementa el programa mediante 3 archivos:
+ - acceso_bd.php: Tiene las variables que se usan para establecer la conexión a la base de datos.
+ - user_access.php: Se utiliza para la autenticación del usuario.
+    
+    El formulario valida mediante HTML:
+   - Usuario: Se verifica que el campo no este vacío.
+   - Password: Se verifica que el campo no este vacío.
+- user_reg.php: Da de alta al usuario en la base de datos.
+
+    El formulario valida mediante HTML:
+   - Usuario: Se verifica que el campo no este vacío.
+   - Nombre y Apellido: Se verifica que el campo no este vacío. 
+   - Password: Se verifica que el campo no este vacío.
