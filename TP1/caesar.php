@@ -27,7 +27,7 @@
 
         
         //Funcion para cifrar el mensaje segun la clave (o desplazamiento) dada
-        public function encriptar($mensaje, $key){
+        public function cifrar($mensaje, $key){
             $tamano =  strlen($mensaje);
             $resultado = '';
 
@@ -44,14 +44,13 @@
                     }
                   }
                 }
-              
             }
             return $resultado;
           }
 
 
         //Funcion para descifrar el mensaje segun la clave (o desplazamiento) dada
-        public function desencriptar($mensaje, $key){
+        public function descifrar($mensaje, $key){
           $tamano =  strlen($mensaje);
           $resultado = '';
 
@@ -83,10 +82,10 @@
             foreach (range(0, 26) as $key) {
               $nro_ocurrencias=0;
               foreach($palabras_mensaje as $pal_mensaje){
-                $msg_aux = $this->desencriptar($pal_mensaje, $key);
+                $msg_aux = $this->descifrar($pal_mensaje, $key);
                 
                 $fp = fopen("diccionario.txt", "r");
-                //Recorro cada palabra del diccionario y me fijo cuantas veces aparece en la palabra desencriptada
+                //Recorro cada palabra del diccionario y me fijo cuantas veces aparece en la palabra descifrada
                 while (!feof($fp)){
                   $palabra_dicc = trim(fgets($fp));
                   if (!empty($palabra_dicc)){                 //por si hay lineas en blanco en el diccionario
@@ -111,7 +110,7 @@
             echo "<br><br>Sugerencias: <br>";
 
             foreach ($sugerencias as $valor_sug) {
-              $found_msg =  $this->desencriptar($mensaje, $valor_sug);
+              $found_msg =  $this->descifrar($mensaje, $valor_sug);
   
               echo "Clave Sugerida: " . $valor_sug;
               echo " ***Palabras encontradas en el diccionario: " . $plaintexts[$valor_sug];

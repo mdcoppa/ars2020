@@ -37,15 +37,29 @@
             if (!empty(trim($user_apynom))){
                 //Prevengo los espacios en blanco
                 if (!empty($user_pass)){
-                    $conexion = mysqli_connect($servidorDB, $usuarioDB, $passDB, $basededatos ) or die ("Error en la conexion: <br>" . mysqli_connect_error());
-                    
+                    //Establezco conexion con la base de datos
+                    $conexion = new mysqli($servidorDB, $usuarioDB, $passDB, $basededatos);
+
+                    /* comprobar la conexión */
+                    if ($conexion->connect_errno) {
+                        echo "Falló la conexión: " . $conexion->connect_error;
+                        exit();
+                    }
+                
                     $user_pass_hash = password_hash($user_pass, PASSWORD_DEFAULT);
                     
                     $consulta = "INSERT INTO Usersmc (nombre, apynom, pass) VALUES ('" . $user_name . "','" . $user_apynom . "','". $user_pass_hash . "')";
-                    $resultado = mysqli_query( $conexion, $consulta ) or die ( "Error al registrar el usuario: <br>" . mysqli_error($conexion));
-                    
-                    echo "Registro exitoso para el usuario " . $user_name;
-                    echo " <a href='user_access.php'>Iniciar Sesion</a>";
+
+                    // Ejecuto el INSERT 
+                    if ($conexion->query($consulta)){             
+                        echo "Registro exitoso para el usuario " . $user_name;
+                        echo " <a href='user_access.php'>Iniciar Sesion</a>";
+                    }else{
+                        echo "Fallo al agregar el usuario: " . $conexion->error;
+                    }
+
+                    // liberar la conexion
+                    $conexion->close();
                 }else{
                     echo "Debe escribir una contraseña. <br>";
                 }

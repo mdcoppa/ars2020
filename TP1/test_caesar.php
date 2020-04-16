@@ -15,7 +15,7 @@
             Clave: <input type="number" name="clave" pattern= "^[0-9]" style=" width:50;"/>
             <br>
             <br>
-            Mensaje: <input type="text" name="mensaje" pattern= "^[a-zA-Z\s]{1,254}" style="width:385px;"/>
+            Mensaje: <input type="text" name="mensaje" pattern= "^[a-zA-Z,ñ,Ñ\s]{1,254}" style="width:385px;" required/>
             <br>
             <br>
           <button type="submit" name="procesar" value="Procesar">Procesar</button>
@@ -43,14 +43,14 @@
             case 0: 
                 if ($cifrado->validar_clave($clave)){
                     if ($cifrado->validar_mensaje($men)){
-                        echo "** Mensaje Cifrado: " . $cifrado->encriptar($men, $clave);
+                        echo "** Mensaje Cifrado: " . $cifrado->cifrar($men, $clave);
                     }
                 }
                 break;
             case 1:
                 if ($cifrado->validar_clave($clave)){
                     if ($cifrado->validar_mensaje($men)){
-                        echo "** Mensaje Descifrado: " . $cifrado->desencriptar($men, $clave);
+                        echo "** Mensaje Descifrado: " . $cifrado->descifrar($men, $clave);
                     }
                 }
                 break;

@@ -28,50 +28,54 @@
         }
         
         //Funcion para cifrar el mensaje segun la clave dada
-        public function encriptar($mensaje, $clave){
+        public function cifrar($mensaje, $clave){
             $tamano_mensaje =  strlen($mensaje);
             $tamano_clave = strlen($clave);
+            
             $pos_clave=0;
-            $resultado = '';
+            $resultado = ''; 
 
-            for ($pos_txt=0; $pos_txt < $tamano_mensaje; $pos_txt++) {
-                //Los espacios en blanco no se modifican.
-                //Se asume que el mensaje solo contiene caracteres del alfabeto, se verifica el mensaje antes.
-                
-                
+            for ($pos_txt=0; $pos_txt < $tamano_mensaje; $pos_txt++) {              
                 //Empiezo por el primer caracter de la clave si ya utilice todos.
                 if ($pos_clave == $tamano_clave){
                   $pos_clave = 0;
                 }
 
                 //Busco la posicion para cada uno de los caracteres de la clave
-                //La posicion encontrada es la que uso para cifrar
+                //La posicion encontrada es el dezplazamiento que uso para cifrar
                 for ($i=0; $i < 27; $i++) {
                   if (ord($clave[$pos_clave]) == ord($this->alfabeto[$i])) {
                     $orden_clave = $i;
                     break;
                   }
                 }
-
-                //Busco la posicion de cada caracter del mensaje y lo cifro con la posicion de la clave correspondiente
-                for ($i=0; $i < 27; $i++) {
+                
+                //Busco la posicion de cada caracter del mensaje y lo cifro con el dezplazamiento encontrado
+                for ($j=0; $j < 27; $j++) {
                   if (strcmp($mensaje[$pos_txt], ' ') == 0){                      //los espacios quedan igual
                     $resultado .= ' ';
                   }else{
-                    if (ord($mensaje[$pos_txt]) == ord($this->alfabeto[$i])) {
-                      $resultado .= $this->alfabeto[($i+$orden_clave)%27];
+                    if (ord($mensaje[$pos_txt]) == ord($this->alfabeto[$j])) {
+                      $resultado .= $this->alfabeto[($j+$orden_clave)%27];
                     }
                   }
                 }
+                
                 //Paso al siguiente caracter de la clave
                 $pos_clave++;
+                //Si la Ñ es parte de la clave tengo que avanzar un caracter mas 
+                if (ord($clave[$pos_clave]) == ord("Ñ")){
+                  $pos_clave++;
+                }
+                
             }
+            
             return $resultado;
           }
 
 
         //Funcion para descifrar el mensaje segun el desplazamiento dado
-        public function desencriptar($mensaje, $clave){
+        public function descifrar($mensaje, $clave){
           $tamano_mensaje =  strlen($mensaje);
           $tamano_clave = strlen($clave);
           $pos_clave=0;

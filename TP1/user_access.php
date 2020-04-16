@@ -29,16 +29,21 @@
         $user_name = $_REQUEST['name'];
         $user_pass = $_REQUEST['pass'];
 
-        //El usuario no puede estar en blanco
+        //El usuario no puede ser solo espacios
         if (!empty(trim($user_name))){
-            //La contraseña no puede estar en blanco
-            if (!empty($user_pass)){
-                $conexion = mysqli_connect($servidorDB, $usuarioDB, $passDB, $basededatos ) or die ("Error en la conexion: <br>" . mysqli_connect_error());
-                //$db = mysqli_select_db( $conexion, $basededatos ) or die ("No se pudo conectar a la base de datos: " . $basededatos . "<br>");
-    
-                $consulta = "SELECT apynom, pass FROM Usersmc where nombre = '" . $user_name . "'";
-                $resultado = mysqli_query( $conexion, $consulta ) or die ( "Error al autenticar: <br>" . mysqli_error($conexion));
+            //La contraseña no puede ser solo espacios
+            if (!empty(trim($user_pass))){
+                $conexion = new mysqli($servidorDB, $usuarioDB, $passDB, $basededatos);
+
+                /* comprobar la conexión */
+                if ($conexion->connect_errno) {
+                    printf("Falló la conexión: %s\n", $conexion->connect_error);
+                    exit();
+                }
                 
+                $consulta = "SELECT apynom, pass FROM Usersmc where nombre = '" . $user_name . "'";
+                $resultado = $conexion->query($consulta);
+                    
                 //Si el usuario existe valido la contraseña, sino pido que se registre
                 //Nombre de usuario es clave unica en la base por lo que a lo sumo solo devuelve una fila la consulta.
                 if ($row = $resultado->fetch_assoc()){
@@ -48,19 +53,15 @@
                     }else{
                         echo "Contraseña incorrecta. <br>";
                     };
-                    $resultado->free();
                 }else{
                     //sino muestro mensaje para que registre
                     echo "No existe el usuario, por favor Registrar. <br>";
                 }
-
-
                 
-                
-
-
-
-                mysqli_close( $conexion );
+                // liberar el conjunto de resultados
+                $resultado->close();
+                // liberar la conexion
+                $conexion->close();
             }else{
                 echo "Debe escribir una contraseña. <br>"; 
             }

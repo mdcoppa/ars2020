@@ -11,10 +11,10 @@
             </select>
             <br>
             <br>
-            Clave: <input type="text" name="clave" pattern= "^[a-zA-Z\s]{1,254}" style=" width:385px;"/>
+            Clave: <input type="text" name="clave" pattern= "^[a-zA-Z,ñ,Ñ\s]{1,254}" style=" width:385px;"/>
             <br>
             <br>
-            Mensaje: <input type="text" name="mensaje" pattern= "^[a-zA-Z\s]{1,254}" style="width:385px;"/>
+            Mensaje: <input type="text" name="mensaje" pattern= "^[a-zA-Z,ñ,Ñ\s]{1,254}" style="width:385px;"/>
             <br>
             <br>
           <button type="submit" name="procesar" value="Procesar">Procesar</button>
@@ -38,8 +38,8 @@
                 echo "<br>";
 
                 switch($opcion){
-                    case 0:echo "Mensaje Cifrado: " . $cifrado->encriptar($men, $clave);break;
-                    case 1:echo "Mensaje Descifrado: " . $cifrado->desencriptar($men, $clave);break;
+                    case 0:echo "Mensaje Cifrado: " . $cifrado->cifrar($men, $clave);break;
+                    case 1:echo "Mensaje Descifrado: " . $cifrado->descifrar($men, $clave);break;
                 }
             }
         }
